@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Registration Form</title>
+</head>
+<body>
+<h2>User Form</h2>
+
+<form method="post" id="userForm" enctype="multipart/form-data" data-local_gov_areas-url="{% url 'ajax_load_local_government_area' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_state").change(function () {
+        const url = $("#userForm").attr("data-local_gov_areas-url");  // get the url of the `load_local_government_area` view
+        const stateId = $(this).val();  // get the selected state ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /userapp/ajax/load-local_government_area/ )
+            data: {
+                'state_id': stateId       // add the state id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_local_government_areas` view function
+               $("#id_local_government_area").html(data);  // replace the contents of the city input with the data that came from the server-->
+
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (local_gov_area) {
+                    html_data += `<option value="${local_gov_area.id}">${local_gov_area.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_local_government_area").html(html_data);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

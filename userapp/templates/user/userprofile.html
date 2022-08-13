@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User profile</title>
+</head>
+<body>
+<img src="{{user.user_image.url}}" alt="user image" width="240">
+<h4>Name: {{user.username}}</h4>
+<h4>Mail Address: {{user.email}}</h4>
+<h4>Location:  {{user.local_government_area}} {{user.state}} state</h4>
+<h5>Contact: {{user.mobile_no}}</h5>
+<h5>signed up: {{user.signup_date}}</h5>
+</body>
+</html>
+
